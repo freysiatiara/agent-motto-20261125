@@ -23,7 +23,18 @@ def output_path():
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.txt")
 
 
+def validate(text):
+    """Gate check, mirroring the bounty gate: 1-200 chars, not blank."""
+    if not 1 <= len(text) <= 200:
+        raise ValueError("motto must be 1-200 characters, got %d" % len(text))
+    if not text.strip():
+        raise ValueError("motto must not be only whitespace")
+    text.encode("utf-8")
+    return text
+
+
 def main():
+    validate(MOTTO)
     path = output_path()
     directory = os.path.dirname(path)
     if directory:
